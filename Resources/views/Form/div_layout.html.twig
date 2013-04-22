@@ -4,9 +4,9 @@
         var RecaptchaOptions = {{ widget_options|default({})|json_encode|raw }};
     </script>
 
-    <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k={{ public_key }}"></script>
+    <script type="text/javascript" src="//www.google.com/recaptcha/api/challenge?k={{ public_key }}"></script>
     <noscript>
-        <iframe src="http://www.google.com/recaptcha/api/noscript?k={{ public_key }}" height="300" width="500" frameborder="0"></iframe>
+        <iframe src="//www.google.com/recaptcha/api/noscript?k={{ public_key }}" height="300" width="500" frameborder="0"></iframe>
         {{ form_widget(form.recaptcha_challenge_field) }}
         {{ form_widget(form.recaptcha_response_field) }}
     </noscript>
@@ -17,7 +17,7 @@
 {% spaceless %}
     <div class="form_image">
         {% if image_uri is defined %}
-        <img src="{{ image_uri }}" alt="{{ image_alt }}"{% if image_height > 0 %} height="{{ image_height }}"{% endif %}{% if image_width > 0 %} width="{{ image_width }}"{% endif %}/>
+        <img src="{{ asset(image_uri) }}" alt="{{ image_alt }}"{% if image_height > 0 %} height="{{ image_height }}"{% endif %}{% if image_width > 0 %} width="{{ image_width }}"{% endif %}/>
         {% else %}
         {% trans %}No image uploaded.{% endtrans %}
         {% endif %}

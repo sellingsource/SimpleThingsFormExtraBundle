@@ -22,7 +22,7 @@ class RecaptchaFormTypeTest extends \PHPUnit_Framework_TestCase
         ;
         $this->dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->factory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
-        $this->builder = new FormBuilder('name', $this->factory, $this->dispatcher);
+        $this->builder = new FormBuilder('name', null, $this->dispatcher, $this->factory);
     }
 
     public function testNameAndParent()
@@ -68,11 +68,11 @@ class RecaptchaFormTypeTest extends \PHPUnit_Framework_TestCase
             'theme' => 'white',
         ));
 
-        $this->type->buildView($view, $this->builder->getForm());
+        $this->type->buildView($view, $this->builder->getForm(), array());
 
-        $this->assertEquals('publicKey', $view->get('public_key'));
+        $this->assertEquals('publicKey', $view->vars['public_key']);
         $this->assertEquals(array(
             'theme' => 'white',
-        ), $view->get('widget_options'));
+        ), $view->vars['widget_options']);
     }
 }

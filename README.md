@@ -9,7 +9,7 @@ Currently this Bundle provides the following:
 
 * RecaptchaFieldType for using Google's reCAPTCHA service.
 * ImageType for showing the previously uploaded image
-* FileSet for showing a list of previously uplaoded files
+* FileSet for showing a list of previously uploaded files
 * FieldTypeExtension for allowing setting `attr` when building a Form.
 
 Current this Bundle **does not** provide the following:
@@ -35,11 +35,30 @@ Fire up a terminal and either clone this repository or add it as a submodule bot
 by example.
 
 ``` shell
-$ git clone git://github.com/SimpleThings/SimpleThingsFormExtraBundle.git vendor/bundles/SimpleThings/FormExtraBundle
+$ git clone git://github.com/simplethings/SimpleThingsFormExtraBundle.git vendor/bundles/SimpleThings/FormExtraBundle
 ```
 
 ``` shell
-$ git submodule add git://github.com/SimpleThings/SimpleThingsFormExtraBundle.git vendor/bundles/SimpleThings/FormExtraBundle
+$ git submodule add git://github.com/simplethings/SimpleThingsFormExtraBundle.git vendor/bundles/SimpleThings/FormExtraBundle
+```
+
+for symfony 2.0 use the deps file by adding this in it and running php bin/vendors install
+
+``` ini
+[FormExtraBundle]
+    git=https://github.com/simplethings/SimpleThingsFormExtraBundle.git
+    target=bundles/SimpleThings/FormExtraBundle
+    version=v0.1
+```
+
+or for symfony 2.1 add this to your composer.json and run composer install
+
+``` json
+{
+    "require": {
+        "simplethings/form-extra-bundle": "dev-master"
+    }
+}
 ```
 
 the enable to the bundle inside your kernel class normally called `AppKernel.php`
@@ -176,7 +195,7 @@ To use it, you need to activate it and to register the form theme using the tran
 ``` yaml
 # app/config/config.yml
 simple_things_form_extra:
-    translation_domain_forward_campat: true
+    translation_domain_forward_compat: true
 
 twig:
     form:
