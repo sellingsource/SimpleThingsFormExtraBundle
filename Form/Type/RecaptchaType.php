@@ -2,8 +2,8 @@
 
 namespace SimpleThings\FormExtraBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType; 
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\Exception\FormException;
@@ -42,7 +42,7 @@ class RecaptchaType extends AbstractType
 
     /**
      * @param Recaptcha $recaptcha
-     * @param string $publicKey
+     * @param string    $publicKey
      */
     public function __construct(Recaptcha $recaptcha, $publicKey)
     {
@@ -53,10 +53,10 @@ class RecaptchaType extends AbstractType
     /**
      * Configures the Type
      *
-     * @param FormBuilder $builder
-     * @param array       $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ((string) $this->publicKey === '') {
             throw new FormException('A public key must be set and not empty.');
@@ -66,32 +66,32 @@ class RecaptchaType extends AbstractType
             ->add('recaptcha_challenge_field', 'text')
             ->add('recaptcha_response_field', 'hidden', array(
                 'data' => 'manual_challenge',
-            ))
-        ;
+            ));
 
         $builder->prependClientTransformer(new RecaptchaTransformer($this->recaptcha));
 
         $builder
-            ->setAttribute('widget_options', $options['widget_options'])
-        ;
+            ->setAttribute('widget_options', $options['widget_options']);
     }
 
     /**
      * Sets attributes for use with the renderer
      *
-     * @param FormView $view
+     * @param FormView      $view
      * @param FormInterface $form
+     * @param array         $options
      */
-    public function buildView(FormView $view, FormInterface $form)
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->set('public_key', $this->publicKey);
-        $view->set('widget_options', $form->getAttribute('widget_options'));
+        $view->vars['public_key'] = $this->publicKey;
+        $view->vars['widget_options'] = $form->getAttribute('widget_options');
     }
 
     /**
      * Options for this type
      *
      * @param  array $options
+     *
      * @return array
      */
     public function getDefaultOptions(array $options)
@@ -109,7 +109,7 @@ class RecaptchaType extends AbstractType
      *
      * @return string
      */
-    public function getParent(array $options)
+    public function getParent()
     {
         return 'form';
     }
